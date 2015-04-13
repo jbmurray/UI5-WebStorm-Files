@@ -296,7 +296,7 @@ All children of this control will receive navigation events like {@link sap.m.Na
 </xsd:element>
 <xsd:element name="P13nColumnsItem" type="n1:_P13nColumnsItemType" substitutionGroup="n0:Item">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>The ColumnsItem can be used to fill columnsItem aggregation in P13nColumnsPanel</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="P13nColumnsPanel" type="n1:_P13nColumnsPanelType" substitutionGroup="n1:P13nPanel">
@@ -306,7 +306,8 @@ All children of this control will receive navigation events like {@link sap.m.Na
 </xsd:element>
 <xsd:element name="P13nConditionPanel" type="n1:_P13nConditionPanelType" substitutionGroup="n0:Control">
 <xsd:annotation>
-<xsd:documentation>The ConditionPanel Control will be used to realize the Sorting, Filtering and Grouping panel of the new Personalization dialog.</xsd:documentation>
+<xsd:documentation>The ConditionPanel Control will be used to realize the Sorting, Filtering and Grouping
+       panel of the new Personalization dialog.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="P13nDialog" type="n1:_P13nDialogType" substitutionGroup="n1:Dialog">
@@ -3617,9 +3618,25 @@ If bandwidth is the key for the application, set this value to false.</xsd:docum
 </xsd:complexType>
 </xsd:element>
 </xsd:sequence>
+<xsd:attribute name="visibleItemsThreshold" type="xsd:int">
+<xsd:annotation>
+<xsd:documentation>This property is used to specify a threshold of visible items</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="addColumnsItem" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>event raised when a columnsItem was added</xsd:documentation>
+<xsd:documentation>event raised when a columnsItem shall be added</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="changeColumnsItems" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>event raised when columnsItems shall be changed or new one needs to be created in model</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="setData" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>event raised when setData on model should be called; this event serves the purpose of minimizing such calls since these can be very
+performance expensive</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -3642,8 +3659,8 @@ If bandwidth is the key for the application, set this value to false.</xsd:docum
 </xsd:attribute>
 <xsd:attribute name="containerQuery" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>defines if the mediaQuery or a ContainerResize will be used for layout update. When the P13nConditionPanel is used on a dialog the
-property should be set to true!</xsd:documentation>
+<xsd:documentation>defines if the mediaQuery or a ContainerResize will be used for layout update. When
+the P13nConditionPanel is used on a dialog the property should be set to true!</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="autoAddNewRow" type="xsd:boolean">
@@ -3653,13 +3670,14 @@ property should be set to true!</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="disableFirstRemoveIcon" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>makes the remove icon on the first condition row disabled when only one condition exist.</xsd:documentation>
+<xsd:documentation>makes the remove icon on the first condition row disabled when only one condition
+exist.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="alwaysShowAddIcon" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>makes the Add icon visible on each condition row. If is set to false the Add is only visible at the end and you can only append a
-new condition.</xsd:documentation>
+<xsd:documentation>makes the Add icon visible on each condition row. If is set to false the Add is only
+visible at the end and you can only append a new condition.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="usePrevConditionSetting" type="xsd:boolean">
@@ -3669,15 +3687,16 @@ new condition.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="autoReduceKeyFieldItems" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>KeyField value can only be selected once. When you set the property to true the ConditionPanel will automatically offers on the
-KeyField drop down only the keyFields which are not used. The default behavior is that in each keyField dropdown all keyfields are
-listed.</xsd:documentation>
+<xsd:documentation>KeyField value can only be selected once. When you set the property to true the
+ConditionPanel will automatically offers on the KeyField drop down only the keyFields
+which are not used. The default behavior is that in each keyField dropdown all
+keyfields are listed.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="layoutMode" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>can be used to control the layout behavior. Default is "" which will automatically change the layout. With "Desktop", "Table"
-or"Phone" you can set a fixed layout.</xsd:documentation>
+<xsd:documentation>can be used to control the layout behavior. Default is "" which will automatically
+change the layout. With "Desktop", "Table" or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="showLabel" type="xsd:boolean">
@@ -3687,8 +3706,8 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="displayFormat" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>This represents the displayFormat of the condition Values. With the value "UpperCase" the entered value of the condition will be
-converted to upperCase.</xsd:documentation>
+<xsd:documentation>This represents the displayFormat of the condition Values.
+With the value "UpperCase" the entered value of the condition will be converted to upperCase.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="dataChange" type="xsd:string">
@@ -3717,7 +3736,7 @@ converted to upperCase.</xsd:documentation>
 </xsd:sequence>
 <xsd:attribute name="initialVisiblePanelType" type="n1:_P13nPanelTypeType">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>This property determines which panel is initially shown when dialog is opened.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="showReset" type="xsd:boolean">
@@ -3750,22 +3769,22 @@ converted to upperCase.</xsd:documentation>
 <xsd:extension base="n0:_ItemType">
 <xsd:attribute name="operation" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>sap.m.P13nConditionOperation</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="value1" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>value of the filter</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="value2" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>to value of the between filter</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="columnKey" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>key of the column</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="exclude" type="xsd:boolean">
@@ -3783,7 +3802,7 @@ converted to upperCase.</xsd:documentation>
 <xsd:sequence>
 <xsd:element name="filterItems" minOccurs="0">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>defined Filter Items</xsd:documentation>
 </xsd:annotation>
 <xsd:complexType>
 <xsd:sequence>
@@ -3804,14 +3823,14 @@ converted to upperCase.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="containerQuery" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>defines if the mediaQuery or a ContainerResize will be used for layout update. When the ConditionPanel is used on a dialog the
-property should be set to true!</xsd:documentation>
+<xsd:documentation>defines if the mediaQuery or a ContainerResize will be used for layout update. When
+the ConditionPanel is used on a dialog the property should be set to true!</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="layoutMode" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>can be used to control the layout behavior. Default is "" which will automatically change the layout. With "Desktop", "Table"
-or"Phone" you can set a fixed layout.</xsd:documentation>
+<xsd:documentation>can be used to control the layout behavior. Default is "" which will automatically
+change the layout. With "Desktop", "Table" or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="addFilterItem" type="xsd:string">
@@ -3838,17 +3857,17 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 <xsd:extension base="n0:_ItemType">
 <xsd:attribute name="operation" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>sap.m.P13nConditionOperation</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="columnKey" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>key of the column</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="showIfGrouped" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>make the grouped column as normalcolumn visible</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -3861,7 +3880,7 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 <xsd:sequence>
 <xsd:element name="groupItems" minOccurs="0">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>defined group Items</xsd:documentation>
 </xsd:annotation>
 <xsd:complexType>
 <xsd:sequence>
@@ -3877,19 +3896,19 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="containerQuery" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>defines if the mediaQuery or a ContainerResize will be used for layout update. When the ConditionPanel is used on a dialog the
-property should be set to true!</xsd:documentation>
+<xsd:documentation>defines if the mediaQuery or a ContainerResize will be used for layout update. When the
+ConditionPanel is used on a dialog the property should be set to true!</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="layoutMode" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>can be used to control the layout behavior. Default is "" which will automatically change the layout. With "Desktop", "Table"
-or"Phone" you can set a fixed layout.</xsd:documentation>
+<xsd:documentation>can be used to control the layout behavior. Default is "" which will automatically change the
+layout. With "Desktop", "Table" or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="addGroupItem" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>event raised when a Item was added</xsd:documentation>
+<xsd:documentation>event raised when a GroupItem was added</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="removeGroupItem" type="xsd:string">
@@ -3926,12 +3945,22 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="type" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>data type of the column (text, numeric or date is supported)</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="precision" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>if type==numeric the precision will be used to format the entered value (maxIntegerDigits  of the used Formatter)</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="scale" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>if type==numeric the scale will be used to format the entered value (maxFractionDigits of the used Formatter)</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="maxLength" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>specifies the number of characters which can be entered in the value fields of the condition panel</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="width" type="xsd:string">
@@ -3941,7 +3970,7 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="isDefault" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>the column with isDefault==true will be used as the selected column item on the conditionPanel</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -3956,7 +3985,7 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 <xsd:element ref="n1:P13nItem" minOccurs="0" maxOccurs="unbounded"/>
 <xsd:element name="items" minOccurs="0">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>Aggregation of items</xsd:documentation>
 </xsd:annotation>
 <xsd:complexType>
 <xsd:sequence>
@@ -3972,12 +4001,17 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="type" type="n1:_P13nPanelTypeType">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>Panel type for generic use</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="verticalScrolling" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>makes the vertical Scrolling on the P13nDialog enabled when the panel is shown</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="beforeNavigationTo" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Due to performance the data of the panel can be requested in lazy mode e.g. when the panel is displayed</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -3989,12 +4023,12 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 <xsd:extension base="n0:_ItemType">
 <xsd:attribute name="operation" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>sap.m.P13nConditionOperation</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="columnKey" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>key of the column</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -4007,7 +4041,7 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 <xsd:sequence>
 <xsd:element name="sortItems" minOccurs="0">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>defined Sort Items</xsd:documentation>
 </xsd:annotation>
 <xsd:complexType>
 <xsd:sequence>
@@ -4018,19 +4052,19 @@ or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:sequence>
 <xsd:attribute name="containerQuery" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>defines if the mediaQuery or a ContainerResize will be used for layout update. When the ConditionPanel is used on a dialog the
-property should be set to true!</xsd:documentation>
+<xsd:documentation>defines if the mediaQuery or a ContainerResize will be used for layout update. When the
+ConditionPanel is used on a dialog the property should be set to true!</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="layoutMode" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>can be used to control the layout behavior. Default is "" which will automatically change the layout. With "Desktop", "Table"
-or"Phone" you can set a fixed layout.</xsd:documentation>
+<xsd:documentation>can be used to control the layout behavior. Default is "" which will automatically change the
+layout. With "Desktop", "Table" or"Phone" you can set a fixed layout.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="addSortItem" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>event raised when a Item was added</xsd:documentation>
+<xsd:documentation>event raised when a SortItem was added</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="removeSortItem" type="xsd:string">
@@ -6316,7 +6350,8 @@ This property is not supported by Internet Explorer 8 and 9. Example: mimeType [
 <xsd:attribute name="multiple" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>Allows multiple files to be chosen and uploaded from the same folder.
-This property is not supported by Internet Explorer 8 and 9.</xsd:documentation>
+This property is not supported by Internet Explorer 8 and 9 
+In Release 1.26 this property is not supported in all browsers so if set to 'true' it will be ignored</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="noDataText" type="xsd:string">
@@ -6326,7 +6361,7 @@ This property is not supported by Internet Explorer 8 and 9.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="sameFilenameAllowed" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>Allows the upload of more than one file with the same file name. For example, if there are files have different paths.</xsd:documentation>
+<xsd:documentation>Allows the user to assign the same name when editing the file name.  “Same” refers to the existence in the list of a file with the same name.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="showSeparators" type="n1:_ListSeparatorsType">
