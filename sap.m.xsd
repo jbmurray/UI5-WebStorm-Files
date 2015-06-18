@@ -61,8 +61,10 @@ Note: when displa Internet Explorer 9, page changes are not animated.</xsd:docum
 </xsd:element>
 <xsd:element name="ColumnListItem" type="n1:_ColumnListItemType" substitutionGroup="n1:ListItemBase">
 <xsd:annotation>
-<xsd:documentation>ColumnListItem can be used to create rows for Table control.
-Note: This control should not be used without Column definition in parent control.</xsd:documentation>
+<xsd:documentation>ColumnListItem can be used with cells aggregation to create rows for the Table control.
+The columns aggregation of the Table should match with the cells aggregation.
+
+NOTE: This control does not respect the counter property of the ListItemBase.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="ComboBox" type="n1:_ComboBoxType" substitutionGroup="n1:ComboBoxBase">
@@ -177,7 +179,11 @@ This control is not supported in Internet Explorer 9!</xsd:documentation>
 </xsd:element>
 <xsd:element name="IconTabBar" type="n1:_IconTabBarType" substitutionGroup="n0:Control">
 <xsd:annotation>
-<xsd:documentation>A tab bar with large icons</xsd:documentation>
+<xsd:documentation>IconTabBar control is similar to the standard tab bar control. It represents a collection of tabs with associated content. The tabs can have text, count and an icon.
+
+IconTabBar can have two behaviors:
+- Like a filter – There is only one main content for all tabs. The main content can be filtered, based on the selected tab.
+- Like a normal tab bar - The contents of each tab are independent from each other.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="IconTabFilter" type="n1:_IconTabFilterType" substitutionGroup="n0:Item">
@@ -247,6 +253,26 @@ Note: The ListBase including all contained items is completely re-rendered when 
 <xsd:documentation>ListItemBase contains the core features of all specific list items.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
+<xsd:element name="MessagePage" type="n1:_MessagePageType" substitutionGroup="n0:Control">
+<xsd:annotation>
+<xsd:documentation>MessagePage is displayed when there is no data or matching content. There are different use cases where a MessagePage might be visualized, for example:
+	- The search query returned no results
+	- The app contains no items
+	- There are too many items
+	- The application is loading
+The layout is unchanged but the text varies depending on the use case.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="MessagePopover" type="n1:_MessagePopoverType" substitutionGroup="n0:Control">
+<xsd:annotation>
+<xsd:documentation>A MessagePopover is a Popover containing a summarized list with messages.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="MessagePopoverItem" type="n1:_MessagePopoverItemType" substitutionGroup="n0:Item">
+<xsd:annotation>
+<xsd:documentation>Items provide information about Error Messages in the page.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
 <xsd:element name="MultiComboBox" type="n1:_MultiComboBoxType" substitutionGroup="n1:ComboBoxBase">
 <xsd:annotation>
 <xsd:documentation>The MultiComboBox control provides a list box with items and a text field allowing the user to either type a value directly into the control or choose from the list of existing items.</xsd:documentation>
@@ -294,6 +320,19 @@ All children of this control will receive navigation events like {@link sap.m.Na
 <xsd:documentation>Status information that may be either text with a value state, or an icon.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
+<xsd:element name="OverflowToolbar" type="n1:_OverflowToolbarType" substitutionGroup="n1:Toolbar">
+<xsd:annotation>
+<xsd:documentation>The OverflowToolbar control is a container based on sap.m.Toolbar, that provides overflow when its content does not fit in the visible area.
+
+Note: Currently only controls of type sap.m.Button can move to the overflow area, but in future versions other controls will be able to as well. 
+For this reason it is advisable to always set layoutData with property "moveToOverflow" to "false" for all controls that are never intended to overflow, regardless of their type.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="OverflowToolbarLayoutData" type="n1:_OverflowToolbarLayoutDataType" substitutionGroup="n1:ToolbarLayoutData">
+<xsd:annotation>
+<xsd:documentation>Holds layout data for the OverflowToolbar items.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
 <xsd:element name="P13nColumnsItem" type="n1:_P13nColumnsItemType" substitutionGroup="n0:Item">
 <xsd:annotation>
 <xsd:documentation>The ColumnsItem can be used to fill columnsItem aggregation in P13nColumnsPanel</xsd:documentation>
@@ -312,7 +351,7 @@ All children of this control will receive navigation events like {@link sap.m.Na
 </xsd:element>
 <xsd:element name="P13nDialog" type="n1:_P13nDialogType" substitutionGroup="n1:Dialog">
 <xsd:annotation>
-<xsd:documentation>The P13nDialog control provides dialog that contains one or more panels. On each of the panels, one or more changes with regards to a
+<xsd:documentation>The P13nDialog control provides a dialog that contains one or more panels. On each of the panels, one or more changes with regards to a
        table can be processed. For example, a panel to set a column to invisible, change the order of the columns or a panel to sort or filter
        tables.</xsd:documentation>
 </xsd:annotation>
@@ -344,7 +383,7 @@ All children of this control will receive navigation events like {@link sap.m.Na
 </xsd:element>
 <xsd:element name="P13nPanel" type="n1:_P13nPanelType" substitutionGroup="n0:Control">
 <xsd:annotation>
-<xsd:documentation>tbd</xsd:documentation>
+<xsd:documentation>Base type for &lt;code&gt;panels&lt;/code&gt; aggregation in P13nDialog control.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="P13nSortItem" type="n1:_P13nSortItemType" substitutionGroup="n0:Item">
@@ -387,13 +426,18 @@ In non-touch browsers where scrollbars are used for scrolling, it is always visi
 </xsd:element>
 <xsd:element name="RadioButton" type="n1:_RadioButtonType" substitutionGroup="n0:Control">
 <xsd:annotation>
-<xsd:documentation>Generally, you would create at least two radio button controls which should have the same GroupName;
-by this, you provide a limited choice for the user. Triggers an Event when User makes a change.</xsd:documentation>
+<xsd:documentation>RadioButton is a control similar to CheckBox. It allows the user to choose only one of the predefined set of options.
+
+Usually, RadioButton is used in a group with other RadioButtons (with the groupName property or by using sap.m.RadioButtonGroup), thus providing a limited choice for the user.
+An event is triggered when the user makes a change of the selection.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="RadioButtonGroup" type="n1:_RadioButtonGroupType" substitutionGroup="n0:Control">
 <xsd:annotation>
-<xsd:documentation>A wrapper for a group of RadioButtons to handle as one UI element.</xsd:documentation>
+<xsd:documentation>This control is used as a wrapper for a group of RadioButton controls, which then can be used as a single UI element.
+You can select only one of the grouped radio buttons at a time. Some of the radio buttons can be configured as inactive (they are displayed as grayed out).
+The grouped radio buttons can be arranged within different number of columns.
+Based on the number of specified columns and the number of radio buttons used, different layout types can be achieved - as a 'matrix', horizontally or vertically aligned radio buttons, etc.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="RatingIndicator" type="n1:_RatingIndicatorType" substitutionGroup="n0:Control">
@@ -422,6 +466,12 @@ Note that it is not recommended to have nested scrolling areas that scroll into 
 <xsd:element name="SegmentedButton" type="n1:_SegmentedButtonType" substitutionGroup="n0:Control">
 <xsd:annotation>
 <xsd:documentation>A SegmentedButton Control is a horizontal control made of multiple buttons which can display a title or an image. It automatically resizes the buttons to fit proportionally within the control. When no width is set, the control uses the available width.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="SegmentedButtonItem" type="n1:_SegmentedButtonItemType" substitutionGroup="n0:Item">
+<xsd:annotation>
+<xsd:documentation>SegmentedButtonItem is used for creating buttons for the sap.m.SegmentedButton.
+It is derived from a core sap.ui.core.Item</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="Select" type="n1:_SelectType" substitutionGroup="n0:Control">
@@ -499,7 +549,7 @@ The Table used in a SelectDialog is a Table with Columns. After selecting an ite
 </xsd:element>
 <xsd:element name="Text" type="n1:_TextType" substitutionGroup="n0:Control">
 <xsd:annotation>
-<xsd:documentation>The Text control is used to display some continuous text.</xsd:documentation>
+<xsd:documentation>The text control can be used for embedding longer paragraphs of text into your application, that need text wrapping.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="TextArea" type="n1:_TextAreaType" substitutionGroup="n1:InputBase">
@@ -525,6 +575,11 @@ tile.</xsd:documentation>
 <xsd:documentation>A container that arranges same-size tiles nicely on carousel pages</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
+<xsd:element name="Title" type="n1:_TitleType" substitutionGroup="n0:Control">
+<xsd:annotation>
+<xsd:documentation>Title control is used for header texts and title.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
 <xsd:element name="ToggleButton" type="n1:_ToggleButtonType" substitutionGroup="n1:Button">
 <xsd:annotation>
 <xsd:documentation>The ToggleButton Control is a Button that can be toggled between pressed and normal state</xsd:documentation>
@@ -544,7 +599,7 @@ tile.</xsd:documentation>
 <xsd:annotation>
 <xsd:documentation>The Toolbar control is a horizontal items container that can be used to get an input from user or just to display output.
 
-Note: By default, when Toolbar overflows, it provides shrinking for text controls(e.g. Text, Label) and the controls that have percentual width.(e.g. Input, Slider). This behaviour can be overwritten by providing sap.m.ToolbarLayoutData for toolbar items.</xsd:documentation>
+Note: By default, when the Toolbar overflows, it provides shrinking for the controls which have percentual width (e.g. Input, Slider) or implement the {@link sap.ui.core.IShrinkable} interface (e.g. Text, Label). This behaviour can be overwritten by providing {@link sap.m.ToolbarLayoutData} for the toolbar items.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="ToolbarLayoutData" type="n1:_ToolbarLayoutDataType" substitutionGroup="n0:LayoutData">
@@ -825,11 +880,6 @@ It is only applied for touch devices.</xsd:documentation>
 <xsd:documentation>The design of the bar. If set to auto it is dependent on the place, where the bar is placed.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="visible" type="xsd:boolean">
-<xsd:annotation>
-<xsd:documentation>Determines whether the control is visible or not. If set to false, the bar will be rendered invisible.</xsd:documentation>
-</xsd:annotation>
-</xsd:attribute>
 </xsd:extension>
 </xsd:complexContent>
 </xsd:complexType>
@@ -957,6 +1007,11 @@ dark: dark theme, useful within a light context
 light: light theme, useful within a dark context</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 </xsd:extension>
 </xsd:complexContent>
 </xsd:complexType>
@@ -1004,6 +1059,11 @@ light: light theme, useful within a dark context</xsd:documentation>
 <xsd:documentation>By default, this is set to true but then one or more requests are sent trying to get the density perfect version of image if this version of image doesn't exist on the server.
 
 If only one version of image is provided, set this value to false to avoid the attempt of fetching density perfect image.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the element's text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="ariaDescribedBy" type="xsd:string">
@@ -1141,6 +1201,11 @@ The getter will return the control id</xsd:documentation>
 <xsd:documentation>Options for the text direction are RTL and LTR. Alternatively, the control can inherit the text direction from its parent container.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="textAlign" type="n0:_TextAlignType">
+<xsd:annotation>
+<xsd:documentation>Aligns the text of the checkbox. Available alignment settings are "Begin", "Center", "End", "Left", and "Right".</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="width" type="n0:_CSSSizeType">
 <xsd:annotation>
 <xsd:documentation>Width of Label</xsd:documentation>
@@ -1154,6 +1219,16 @@ The getter will return the control id</xsd:documentation>
 <xsd:attribute name="editable" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>Specifies whether the user shall be allowed to select the check box</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="select" type="xsd:string">
@@ -1292,7 +1367,8 @@ Note: You can pass one string parameter to given function after "#" sign. e.g. "
 </xsd:choice>
 <xsd:element name="cells" minOccurs="0">
 <xsd:annotation>
-<xsd:documentation>Every item inside the cells aggregation defines one column of the row.</xsd:documentation>
+<xsd:documentation>Every item inside the cells aggregation defines one column of the row.
+The order of the cells aggregation must match the order of the columns aggregation of the Table.</xsd:documentation>
 </xsd:annotation>
 <xsd:complexType>
 <xsd:sequence>
@@ -1434,6 +1510,7 @@ If you use data-binding on value property with type sap.ui.model.type.Date then 
 <xsd:annotation>
 <xsd:documentation>Given value property should match with valueFormat to parse date. Default value is taken from locale settings.
 You can set and get value in this format.
+the value is always expected and updated in gregorian calendar
 If you use data-binding on value property with type sap.ui.model.type.Date you can ignore this property or latter wins.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
@@ -1441,6 +1518,14 @@ If you use data-binding on value property with type sap.ui.model.type.Date you c
 <xsd:annotation>
 <xsd:documentation>This property as JavaScript Date Object can be used to assign a new value which is independent from valueFormat.
 If this property is used, the value property should not be changed from the caller.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="displayFormatType" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Displays date value in this given type in text field. Default value is taken from locale settings.
+Acceptes are values of sap.ui.core.CalendarType or an empty string. If no type is set the default one of the 
+configuration is used.
+If you use data-binding on value property with type sap.ui.model.type.Date then you can ignore this property or latter wins.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -1667,6 +1752,11 @@ Dialog detects if there's sap.m.NavContainer, sap.m.Page, or sap.m.ScrollContain
 <xsd:documentation>Focus is set to the dialog in the sequence of leftButton and rightButton when available. But if some other control needs to get the focus other than one of those two buttons, set the initialFocus with the control which should be focused on. Setting initialFocus to input controls doesn't open the on screen keyboard on mobile device, this is due to the browser limitation that the on screen keyboard can't be opened with javascript code. The opening of on screen keyboard must be triggered by real user action.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="beforeOpen" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>This event will be fired before the dialog is opened.</xsd:documentation>
@@ -1702,6 +1792,11 @@ Dialog detects if there's sap.m.NavContainer, sap.m.Page, or sap.m.ScrollContain
 <xsd:attribute name="value" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>List item value</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="valueTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the value text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -1893,10 +1988,20 @@ Dialog detects if there's sap.m.NavContainer, sap.m.Page, or sap.m.ScrollContain
 </xsd:attribute>
 <xsd:attribute name="iconDensityAware" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>Some mobile devices support higher resolution images while others do not. Therefore you should provide image resources for all relevant densities.
-If the property is set to "true" one or more requests are sent to the server trying to get the density perfect version of an image. If an image of a certain density is not available, the image control falls back to the default image, which should be provided as well.
+<xsd:documentation>Some mobile devices support higher resolution images while others do not. Therefore, you should provide image resources for all relevant densities.
+If the property is set to "true", one or more requests are sent to the server to try and get the perfect density version of an image. If an image of a certain density is not available, the image control falls back to the default image, which should be provided.
 
-If you do not have higher resolution images you should set the property to "false" to avoid unnecessary roundtrips.</xsd:documentation>
+If you do not have higher resolution images, you should set the property to "false" to avoid unnecessary round-trips.
+
+Please be aware that this property is relevant only for images and not for icons.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="buttonTooltip" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Sets a new tooltip for submit button. The tooltip can either be a simple string (which in most cases will be rendered as the title attribute of this Element)
+or an instance of sap.ui.core.TooltipBase.
+If a new tooltip is set, any previously set tooltip is deactivated.
+The default value is set language dependent.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="post" type="xsd:string">
@@ -2103,6 +2208,11 @@ Will not be displayed if not set.</xsd:documentation>
 <xsd:attribute name="upperCase" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>Title will be put to capital letters by default, otherwise set this property to 'false'</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="titleTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the title text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -2468,7 +2578,11 @@ Note: If this aggregation is filled, the aggregation suggestionItems will be ign
 </xsd:sequence>
 <xsd:attribute name="type" type="n1:_InputTypeType">
 <xsd:annotation>
-<xsd:documentation>Type of input (e.g. Text, Number, Email, Phone)</xsd:documentation>
+<xsd:documentation>Type of input (e.g. Text, Number, Email, Phone). This is the HTML type for the "input" tag. It is supported
+by browsers natively. Touch devices open various soft keyboard layouts depending on the given input type.
+However, only the default value &lt;code&gt;sap.m.InputType.Text&lt;/code&gt; may be used in combination with data model formats.
+&lt;code&gt;sap.ui.model&lt;/code&gt; defines extended formats that are mostly incompatible with normal HTML
+representations for numbers and dates.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="maxLength" type="xsd:int">
@@ -2613,9 +2727,19 @@ NOTE: If suggestions are not tabular or no suggestions are used, the button will
 <xsd:documentation>Sets the horizontal alignment of the text.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the element's text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="change" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>This event gets fired when the input operation has finished and the value has changed.</xsd:documentation>
+<xsd:documentation>This event gets fired when the text in the input field has changed and the focus leaves the input field or the enter key is pressed.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -2712,32 +2836,52 @@ By default the label set the for attribute to the ID of the labeled control. Thi
 </xsd:attribute>
 <xsd:attribute name="target" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>Options are _self, _top, _blank, _parent, _search. Alternatively, a frame name can be entered.</xsd:documentation>
+<xsd:documentation>Options are the standard values for window.open() supported by browsers: _self, _top, _blank, _parent, _search. Alternatively, a frame name can be entered. This property is only used for href URLs.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="width" type="n0:_CSSSizeType">
 <xsd:annotation>
-<xsd:documentation>Width of text link. When it is set (CSS-size such as % or px), this is the exact size. When left blank, the text defines the size.</xsd:documentation>
+<xsd:documentation>Width of the link. When it is set (CSS-size such as % or px), this is the exact size. When left blank, the text defines the size.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="href" type="n0:_URIType">
 <xsd:annotation>
-<xsd:documentation>The link target URI. Supports standard hyperlink behavior. If an action should be triggered, this should not be set, but instead an event handler for the "press" event should be registered.</xsd:documentation>
+<xsd:documentation>The link target URI. Supports standard hyperlink behavior. If a JavaScript action should be triggered, this should not be set, but instead an event handler for the "press" event should be registered.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="wrapping" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>Whether the link text is allowed to wrap when tehre is not sufficient space.</xsd:documentation>
+<xsd:documentation>Whether the link text is allowed to wrap when there is not sufficient space.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textAlign" type="n0:_TextAlignType">
+<xsd:annotation>
+<xsd:documentation>Sets the horizontal alignment of the text.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the element's text directionality with enumerated options. By default, the control inherits text direction from the parent DOM.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="subtle" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>Subtle link is only to be used to help with visual hierarchy between large data lists of important and less important links. Subtle links should not be used in any other usecase</xsd:documentation>
+<xsd:documentation>Subtle links look more like standard text than like links. They should only be used to help with visual hierarchy between large data lists of important and less important links. Subtle links should not be used in any other usecase.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="emphasized" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>Set this property to true if the link should appear emphasized.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="press" type="xsd:string">
@@ -2926,6 +3070,11 @@ This property can be used only if "growing" property is set "true" and if you on
 <xsd:documentation>By default, if you have binding then the control remembers selections after binding update(sorting, filter, refresh). If this is not a desired behavior for your use case, you can switch this off with setting it to "false".</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="select" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Event is fired when selection is changed by user interaction. In "multi-selection" mode, this event is also fired on "deselect"</xsd:documentation>
@@ -3007,24 +3156,201 @@ Note: Binding the "selected" property in single selection mode, may cause unwant
 <xsd:documentation>Property sets a counter bubble with the integer given.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="tap" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>tap event</xsd:documentation>
+<xsd:documentation>Event is fired when the user taps on the control.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="detailTap" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>detail tap event</xsd:documentation>
+<xsd:documentation>Event is fired when the user taps on the detail button of the control.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="press" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>Event is fired when the user clicks on the control.</xsd:documentation>
+<xsd:documentation>Event is fired when the user clicks on the control.
+
+Note: When the parent mode is SingleSelectMaster or includeItemInSelection is true then this event is not fired but the parent fires a selectionChange event instead.
+Also if there is an interactive element that handles the press event then the list item's press is not fired.
+
+If mode detection is not necessary for the press event then the itemPress event of the parent can be used. 
+{@link sap.m.ListBase#attachItemPress}</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="detailPress" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Event is fired when the user clicks on the detail button of the control.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<!--type definition for UIElement 'sap.m.MessagePage'-->
+<xsd:complexType name="_MessagePageType">
+<xsd:complexContent>
+<xsd:extension base="n0:_ControlType">
+<xsd:sequence>
+<xsd:element name="customText" minOccurs="0">
+<xsd:annotation>
+<xsd:documentation>The (optional) custom Text control of this page.
+Use this aggregation when the "text" (sap.m.Text) control needs to be replaced with a sap.m.Link control.
+"text" and "textDirection" setters can be used for this aggregation.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="n1:Link" minOccurs="0"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="customDescription" minOccurs="0">
+<xsd:annotation>
+<xsd:documentation>The (optional) custom description control of this page.
+Use this aggregation when the "description" (sap.m.Text) control needs to be replaced with a sap.m.Link control.
+"description" and "textDirection" setters can be used for this aggregation.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="n1:Link" minOccurs="0"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+<xsd:attribute name="text" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>MessagePage text</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="description" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>MessagePage description</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="title" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>MessagePage title</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="showHeader" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>Determines whether the header of the MessagePage is rendered when it's embedded in another page.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="showNavButton" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>A nav button will be rendered in the header if this property is set to true.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="icon" type="n0:_URIType">
+<xsd:annotation>
+<xsd:documentation>MessagePage main icon</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the element's text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="navButtonPress" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>this event is fired when Nav Button is pressed</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<!--type definition for UIElement 'sap.m.MessagePopover'-->
+<xsd:complexType name="_MessagePopoverType">
+<xsd:complexContent>
+<xsd:extension base="n0:_ControlType">
+<xsd:sequence>
+<!--default aggregation 'items'-->
+<xsd:element ref="n1:MessagePopoverItem" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element name="items" minOccurs="0">
+<xsd:annotation>
+<xsd:documentation>A list with error items</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="n1:MessagePopoverItem" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+<xsd:attribute name="placement" type="n1:_VerticalPlacementTypeType">
+<xsd:annotation>
+<xsd:documentation>Determines the position, where the control will appear on the screen. Possible values are: Top, Bottom and Vertical. The default value is sap.m.VerticalPlacementType.Vertical. Setting this property while the control is open, will not cause any re-rendering and changing of the position. Changes will be applied with the next interaction.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="initiallyExpanded" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>Sets the initial state of the control – expanded or collapsed. By default the control opens as expanded.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="afterOpen" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>This event will be fired after the popover is opened.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="afterClose" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>This event will be fired after the popover is closed.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="beforeOpen" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>This event will be fired before the popover is opened.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="beforeClose" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>This event will be fired before the popover is closed.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="itemSelect" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>This event will be fired when description is shown</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="listSelect" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>This event will be fired when one of the lists is shown when (not) filtered  by type</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<!--type definition for UIElement 'sap.m.MessagePopoverItem'-->
+<xsd:complexType name="_MessagePopoverItemType">
+<xsd:complexContent>
+<xsd:extension base="n0:_ItemType">
+<xsd:attribute name="type" type="n0:_MessageTypeType">
+<xsd:annotation>
+<xsd:documentation>Specifies the type of the message</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="title" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Specifies the title of the message</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="description" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Specifies detailed description of the message</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -3075,6 +3401,13 @@ Note: please do not use the "change" event inherited from sap.m.InputBase</xsd:d
 </xsd:complexType>
 </xsd:element>
 </xsd:sequence>
+<xsd:attribute name="enableMultiLineMode" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>If set to true, the MultiInput will be displayed in multi-line display mode. 
+In multi-line display mode, all tokens can be fully viewed and easily edited in the MultiInput.
+The default value is false.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="tokenChange" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>fired when the tokens aggregation changed (add / remove token)</xsd:documentation>
@@ -3169,6 +3502,12 @@ This event can be aborted by the application with preventDefault(), which means 
 <xsd:attribute name="active" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>Indicates if the object attribute text is selectable by the user.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>Determines the direction of the text, not including the title.
+Available options for the text direction are LTR (left-to-right) and RTL (right-to-left). By default the control inherits the text direction from its parent control.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="press" type="xsd:string">
@@ -3286,11 +3625,6 @@ This is an association for the end area of the object header. It can either be f
 <xsd:documentation>Indicates that the object header icon is clickable</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="visible" type="xsd:boolean">
-<xsd:annotation>
-<xsd:documentation>Indicates if object header is visible. Invisible object headers are not rendered.</xsd:documentation>
-</xsd:annotation>
-</xsd:attribute>
 <xsd:attribute name="iconDensityAware" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>By default, this is set to true but then one or more requests are sent trying to get the density perfect version of image if this version of image doesn't exist on the server.
@@ -3338,6 +3672,58 @@ This property is used to set the background color of the ObjectHeader. Possible 
 <xsd:annotation>
 <xsd:documentation>If this property is set to true the ObjectHeader is rendered with a different design and reacts responsively to the screen sizes.
 Be aware that the design and behavior of the responsive ObjectHeader can change without further notification.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="fullScreenOptimized" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>NOTE: Only applied if you set "responsive=true".
+If this property is set to true, the control occupies the available screen area so that the contents are arranged in a different way to fit in that area.
+If it is set to false, the control is optimized for the master detail view.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="titleHref" type="n0:_URIType">
+<xsd:annotation>
+<xsd:documentation>The title link target URI. Supports standard hyperlink behavior. If an action should be triggered, this should not be set, but instead an event handler for the "titlePress" event should be registered.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="titleTarget" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Options are _self, _top, _blank, _parent, _search. Alternatively, a frame name can be entered.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="introHref" type="n0:_URIType">
+<xsd:annotation>
+<xsd:documentation>The intro link target URI. Supports standard hyperlink behavior. If an action should be triggered, this should not be set, but instead an event handler for the "introPress" event should be registered.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="introTarget" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Options are _self, _top, _blank, _parent, _search. Alternatively, a frame name can be entered.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="titleTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the title text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="introTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the intro text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="numberTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the number and unit directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="titlePress" type="xsd:string">
@@ -3401,6 +3787,11 @@ Be aware that the design and behavior of the responsive ObjectHeader can change 
 <xsd:attribute name="titleActive" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>Indicates if the object identifier's title is clickable.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the element's text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="titlePress" type="xsd:string">
@@ -3506,6 +3897,32 @@ If bandwidth is the key for the application, set this value to false.</xsd:docum
 <xsd:documentation>Object list item number and numberUnit value state.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="titleTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>Determines the text direction of the item title.
+Available options for the title direction are LTR (left-to-right) and RTL (right-to-left).
+By default the item title inherits the text direction from its parent.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="introTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>Determines the text direction of the item intro.
+Available options for the intro direction are LTR (left-to-right) and RTL (right-to-left).
+By default the item intro inherits the text direction from its parent.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="numberTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>Determines the text direction of the item number.
+Available options for the number direction are LTR (left-to-right) and RTL (right-to-left).
+By default the item number inherits the text direction from its parent.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="markLocked" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>Set the locked state of the object list item.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 </xsd:extension>
 </xsd:complexContent>
 </xsd:complexType>
@@ -3536,6 +3953,16 @@ If bandwidth is the key for the application, set this value to false.</xsd:docum
 <xsd:attribute name="unit" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Number units qualifier. If numberUnit and unit are both set, the unit value is used.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>Available options for the number and unit text direction are LTR and RTL. By default the control inherits the text direction from its parent control.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textAlign" type="n0:_TextAlignType">
+<xsd:annotation>
+<xsd:documentation>Sets the horizontal alignment of the number and unit.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -3570,6 +3997,42 @@ If bandwidth is the key for the application, set this value to false.</xsd:docum
 <xsd:documentation>By default, this is set to true but then one or more requests are sent trying to get the density perfect version of image if this version of image doesn't exist on the server.
 
 If bandwidth is the key for the application, set this value to false.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>Determines the direction of the text, not including the title.
+Available options for the text direction are LTR (left-to-right) and RTL (right-to-left). By default the control inherits the text direction from its parent control.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<!--type definition for UIElement 'sap.m.OverflowToolbar'-->
+<xsd:complexType name="_OverflowToolbarType">
+<xsd:complexContent>
+<xsd:extension base="n1:_ToolbarType">
+<xsd:sequence/>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<!--type definition for UIElement 'sap.m.OverflowToolbarLayoutData'-->
+<xsd:complexType name="_OverflowToolbarLayoutDataType">
+<xsd:complexContent>
+<xsd:extension base="n1:_ToolbarLayoutDataType">
+<xsd:attribute name="moveToOverflow" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>The toolbar item can/cannot move to the action sheet</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="stayInOverflow" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>The toolbar item can/cannot stay in the action sheet</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -3734,9 +4197,10 @@ With the value "UpperCase" the entered value of the condition will be converted 
 </xsd:complexType>
 </xsd:element>
 </xsd:sequence>
-<xsd:attribute name="initialVisiblePanelType" type="n1:_P13nPanelTypeType">
+<xsd:attribute name="initialVisiblePanelType" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>This property determines which panel is initially shown when dialog is opened.</xsd:documentation>
+<xsd:documentation>This property determines which panel is initially shown when dialog is opened. Due to extensibility reason the type should be
+"string". So it is feasible to add a custom panel without expanding the type.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="showReset" type="xsd:boolean">
@@ -3999,9 +4463,15 @@ layout. With "Desktop", "Table" or"Phone" you can set a fixed layout.</xsd:docum
 <xsd:documentation>Title text appears in the panel</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="type" type="n1:_P13nPanelTypeType">
+<xsd:attribute name="titleLarge" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>Panel type for generic use</xsd:documentation>
+<xsd:documentation>Large title text appears e.g. in dialog header in case that only one panel is shown</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="type" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Panel type for generic use. Due to extensibility reason the type of "type" property should be "string". So it is feasible to add a
+custom panel without expanding the type.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="verticalScrolling" type="xsd:boolean">
@@ -4164,6 +4634,12 @@ When a customHeader is used, this aggregation will be ignored.</xsd:documentatio
 <xsd:documentation>The title text appearing in the page header bar.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="titleLevel" type="n0:_TitleLevelType">
+<xsd:annotation>
+<xsd:documentation>Defines the semantic level of the title. Using 'Auto' no explicit level information is written.
+Used for accessibility purposes only.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="showNavButton" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>A nav button will be rendered on the left area of header bar if this property is set to true.</xsd:documentation>
@@ -4175,6 +4651,11 @@ When a customHeader is used, this aggregation will be ignored.</xsd:documentatio
 If set to true, either the control under the "customHeader" aggregation is used, or if there is no such control, a Header control is constructed from the properties "title", "showNavButton", "navButtonText" and "icon" depending on the platform.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="showSubHeader" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>Whether this page shall show the subheader.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="navButtonText" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>The text of the nav button when running in iOS (if shown) in case it deviates from the default, which is "Back". This property is mvi-theme-dependent and will not have any effect in other themes.</xsd:documentation>
@@ -4182,8 +4663,8 @@ If set to true, either the control under the "customHeader" aggregation is used,
 </xsd:attribute>
 <xsd:attribute name="enableScrolling" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>Whether the Page takes special measures to make page content scrollable and keep headers fixed.
-If set to false, there will be no scrolling at all; for performance reasons this is highly recommended when scrolling is not needed.
+<xsd:documentation>Enable vertical scrolling of page contents. Page headers and footers are fixed and do not scroll.
+If set to false, there will be no scrolling at all.
 
 The Page only allows vertical scrolling because horizontal scrolling is discouraged in general for full-page content. If it still needs to be achieved, disable the Page scrolling and use a ScrollContainer as full-page content of the Page. This allows you to freely configure scrolling. It can also be used to create horizontally-scrolling sub-areas of (vertically-scrolling) Pages.</xsd:documentation>
 </xsd:annotation>
@@ -4283,17 +4764,21 @@ Note: This aggregation overwrites "headerText" property.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="expandable" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>Specifies whether the control is expandable. Per default the control is rendered as expanded.</xsd:documentation>
+<xsd:documentation>Specifies whether the control is expandable.
+If expandable is set to false, the expanded property is always set to true, if expandable is set to false, then the expanded property can be set either true or false.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="expanded" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>If expandable, this property indicates is the state is expanded or not. If expanded, then infoToolbar (if available) and content is rendered; if expanded is false, then only the headerText/headerToolbar is rendered.</xsd:documentation>
+<xsd:documentation>Indicates whether the state of the sap.m.Panel is expanded or not, if the expandable property is set to true.
+If expanded is set to true, then both the infoToolbar (if available) and the content are rendered.
+If expanded is set to false, then only the headerText/headerToolbar is rendered.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="expandAnimation" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>Indicates whether the transition between the expanded and the hidden state of the control is animated. By default the animation is enabled.</xsd:documentation>
+<xsd:documentation>Indicates whether the transition between the expanded and the hidden state of the control is animated.
+By default the animation is enabled.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="expand" type="xsd:string">
@@ -4470,6 +4955,11 @@ Popover detects if there's sap.m.NavContainer, sap.m.Page, or sap.m.ScrollContai
 <xsd:documentation>Focus is set to the popover in the sequence of leftButton and rightButton when available. But if some other control neends to get the focus other than one of those two buttons, set the initialFocus with the control which should be focused on.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="afterOpen" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>This event will be fired after the popover is opened.</xsd:documentation>
@@ -4530,6 +5020,11 @@ Popover detects if there's sap.m.NavContainer, sap.m.Page, or sap.m.ScrollContai
 <xsd:attribute name="height" type="n0:_CSSSizeType">
 <xsd:annotation>
 <xsd:documentation>The height of the control. The default value depends on the theme. Suggested size for normal use is 2.5rem (40px). Suggested size for small size (like for use in ObjectHeader) is 1.375rem (22px).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the element's text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -4620,6 +5115,21 @@ there will not be visual changes on active state. Default value is 'true'</xsd:d
 <xsd:documentation>Enumeration sap.ui.core.ValueState provides state values Error, Success, Warning, None</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="textAlign" type="n0:_TextAlignType">
+<xsd:annotation>
+<xsd:documentation>Available alignment settings are "Begin", "Center", "End", "Left", and "Right".</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="select" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Event is triggered when the user makes a change on the radio button (selecting or unselecting it).</xsd:documentation>
@@ -4656,11 +5166,6 @@ there will not be visual changes on active state. Default value is 'true'</xsd:d
 <xsd:documentation>Number of RadioButtons displayed in one line/column.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="visible" type="xsd:boolean">
-<xsd:annotation>
-<xsd:documentation>Specifies whether the control is visible. Invisible controls are not rendered.</xsd:documentation>
-</xsd:annotation>
-</xsd:attribute>
 <xsd:attribute name="editable" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>Specifies whether the user can select the RadioButtonGroup. When the property is set to false, the control obtains visual styles different from its visual styles for the normal and the disabled state. Additionally the control is no longer interactive, but can receive focus.</xsd:documentation>
@@ -4679,6 +5184,11 @@ there will not be visual changes on active state. Default value is 'true'</xsd:d
 <xsd:attribute name="enabled" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>Switches the enabled state of the control. All Radio Buttons inside a disabled group are disabled. Default value is “true”.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the element's text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="ariaDescribedBy" type="xsd:string">
@@ -4742,6 +5252,16 @@ there will not be visual changes on active state. Default value is 'true'</xsd:d
 <xsd:attribute name="visualMode" type="n1:_RatingIndicatorVisualModeType">
 <xsd:annotation>
 <xsd:documentation>Defines how float values are visualized: Full, Half (see enumeration RatingIndicatorVisualMode)</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="change" type="xsd:string">
@@ -4982,7 +5502,7 @@ Note that it should be set to "true" when there are no focusable el
 </xsd:attribute>
 <xsd:attribute name="width" type="n0:_CSSSizeType">
 <xsd:annotation>
-<xsd:documentation>Defines the width of the input.</xsd:documentation>
+<xsd:documentation>Defines the CSS width of the input. If not set, width is 100%.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="enabled" type="xsd:boolean">
@@ -5031,6 +5551,16 @@ If false, both the search and refresh buttons are not displayed even if the "sho
 <xsd:documentation>Normally, search text is selected for copy when the SearchField is focused by keyboard navigation. If an application re-renders the SearchField during the liveChange event, set this property to false to disable text selection by focus.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="search" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Event which is fired when the user triggers a search.</xsd:documentation>
@@ -5053,11 +5583,22 @@ If false, both the search and refresh buttons are not displayed even if the "sho
 <xsd:element ref="n1:Button" minOccurs="0" maxOccurs="unbounded"/>
 <xsd:element name="buttons" minOccurs="0">
 <xsd:annotation>
-<xsd:documentation>The buttons of the SegmentedButton control. The items set in this aggregation are used as an interface for the buttons displayed by the control. Only the properties "id", "icon", "text", and "enabled" of the Button control are evaluated. Setting other properties of the button will have no effect. Alternatively, you can use the "createButton" method to add buttons.</xsd:documentation>
+<xsd:documentation>The buttons of the SegmentedButton control. The items set in this aggregation are used as an interface for the buttons displayed by the control. Only the properties "id", "icon", "text", "enabled" and "textDirections" of the Button control are evaluated. Setting other properties of the button will have no effect. Alternatively, you can use the "createButton" method to add buttons.</xsd:documentation>
 </xsd:annotation>
 <xsd:complexType>
 <xsd:sequence>
 <xsd:element ref="n1:Button" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="items" minOccurs="0">
+<xsd:annotation>
+<xsd:documentation>Aggregation of items to be displayed. The items set in this aggregation are used as an interface for the buttons displayed by the control.
+The "items" and "buttons" aggregations should NOT be used simultaneously as it causes the control to work incorrectly.</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="n1:SegmentedButtonItem" minOccurs="0" maxOccurs="unbounded"/>
 </xsd:sequence>
 </xsd:complexType>
 </xsd:element>
@@ -5072,15 +5613,53 @@ If false, both the search and refresh buttons are not displayed even if the "sho
 <xsd:documentation>If disabled all buttons look grey, you cannot focus on them, you can not even click on them.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="selectedKey" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Key of the selected item. If no item to this key is found in the aggregation "items", no changes will apply. Only the "items" aggregation is affected. If duplicate keys exist, the first item matching the key is used.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="selectedButton" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>A reference to the currently selected button control. By default or if the association is set to a falsy value (null, undefined, "", false), the first button will be selected.
 If the association is set to an invalid value (e.g. an ID of a button that does not exist) the selection on the SegmentedButton will be removed.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="select" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Event is fired when the user selects a button, which returns the id and button object</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<!--type definition for UIElement 'sap.m.SegmentedButtonItem'-->
+<xsd:complexType name="_SegmentedButtonItemType">
+<xsd:complexContent>
+<xsd:extension base="n0:_ItemType">
+<xsd:attribute name="icon" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>The icon belonging to the button.
+This can be an URI to an image or an icon font URI.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="width" type="n0:_CSSSizeType">
+<xsd:annotation>
+<xsd:documentation>Sets the width of the buttons.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="press" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Event is fired when the user clicks on a individual button.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -5150,9 +5729,24 @@ Note: The width will be ignored if the "autoAdjustWidth" property is set to true
 <xsd:documentation>If set to true, the width of the select input is determined by the selected item’s content.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="textAlign" type="n0:_TextAlignType">
+<xsd:annotation>
+<xsd:documentation>Sets the horizontal alignment of the text within the input field.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>Specifies the direction of the text within the input field with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 <xsd:attribute name="selectedItem" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Sets or retrieves the selected item from the aggregation named items.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="change" type="xsd:string">
@@ -5285,6 +5879,11 @@ Note: The width will be ignored if the "autoAdjustWidth" property is set to true
 <xsd:attribute name="selectedItem" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Sets or retrieves the selected item from the aggregation named items.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="selectionChange" type="xsd:string">
@@ -5430,7 +6029,7 @@ See jQuery.sap.setIcons() for full documentation.</xsd:documentation>
 <xsd:annotation>
 <xsd:documentation>Define the amount of units to change the slider when adjusting by drag and drop.
 
-Defines the size of the slider's selection intervals. (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10, 15, 20).
+Defines the size of the slider's selection intervals. (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
 
 The step must be positive, if a negative number is provided, the default value will be used instead.
 If the width of the slider converted to pixels is less than the range (max – min), the value will be rounded to multiples of the step size.</xsd:documentation>
@@ -5446,6 +6045,11 @@ If the width of the slider converted to pixels is less than the range (max – m
 <xsd:documentation>Define the value of the slider.
 
 If the value is lower/higher than the allowed minimum/maximum, the value of the properties "min"/"max" are used instead.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="change" type="xsd:string">
@@ -5693,6 +6297,16 @@ If bandwidth is the key for the application, set this value to false.</xsd:docum
 <xsd:documentation>By default the title size adapts to the available space and gets bigger if the description is empty. If you have list items with and without description this results in titles with different sizes. In this cases it can be better to switch the size adaption off with setting this property to "false".</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="titleTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the title text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="infoTextDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the info text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 </xsd:extension>
 </xsd:complexContent>
 </xsd:complexType>
@@ -5747,6 +6361,11 @@ If bandwidth is the key for the application, set this value to false.</xsd:docum
 If bandwidth is the key for the application, set this value to false.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
+<xsd:attribute name="ariaDescribedBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which describe this control (see WAI-ARIA attribute aria-describedby).</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 </xsd:extension>
 </xsd:complexContent>
 </xsd:complexType>
@@ -5788,6 +6407,11 @@ Beware that the given text will be cut off after three characters.</xsd:document
 <xsd:attribute name="type" type="n1:_SwitchTypeType">
 <xsd:annotation>
 <xsd:documentation>Type of a Switch. Possibles values "Default", "AcceptReject".</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="change" type="xsd:string">
@@ -6081,6 +6705,45 @@ control.</xsd:documentation>
 </xsd:extension>
 </xsd:complexContent>
 </xsd:complexType>
+<!--type definition for UIElement 'sap.m.Title'-->
+<xsd:complexType name="_TitleType">
+<xsd:complexContent>
+<xsd:extension base="n0:_ControlType">
+<xsd:attribute name="text" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Title Text to be displayed</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="level" type="n0:_TitleLevelType">
+<xsd:annotation>
+<xsd:documentation>Defines the semantic level of the title. Using 'Auto' no explicit level information is written.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="titleStyle" type="n0:_TitleLevelType">
+<xsd:annotation>
+<xsd:documentation>Sets the style of the Title. Using 'Auto' the style is automatically set based on the current position of the title and the current theming.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="width" type="n0:_CSSSizeType">
+<xsd:annotation>
+<xsd:documentation>Defines the width of the Title.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textAlign" type="n0:_TextAlignType">
+<xsd:annotation>
+<xsd:documentation>Available alignment settings are "Begin", "Center", "End", "Left", and "Right".</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="title" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to a generic title description.
+If such a title element is associated the properties text, level and tooltip (text only) of this element are consumed.
+The corresponding properties of the title control are ignored.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
 <!--type definition for UIElement 'sap.m.ToggleButton'-->
 <xsd:complexType name="_ToggleButtonType">
 <xsd:complexContent>
@@ -6116,6 +6779,11 @@ control.</xsd:documentation>
 <xsd:attribute name="editable" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>if true, token displays delete icon and fires events accordingly</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="textDirection" type="n0:_TextDirectionType">
+<xsd:annotation>
+<xsd:documentation>This property specifies the text directionality with enumerated options. By default, the control inherits text direction from the DOM.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="delete" type="xsd:string">
@@ -6196,11 +6864,6 @@ control.</xsd:documentation>
 </xsd:complexType>
 </xsd:element>
 </xsd:sequence>
-<xsd:attribute name="visible" type="xsd:boolean">
-<xsd:annotation>
-<xsd:documentation>Sets the visibility of the control.</xsd:documentation>
-</xsd:annotation>
-</xsd:attribute>
 <xsd:attribute name="width" type="n0:_CSSSizeType">
 <xsd:annotation>
 <xsd:documentation>Defines the width of the control.
@@ -6333,9 +6996,9 @@ If at least one file does not fit the file type requirements, the upload is prev
 If the maximum file name length is exceeded, the corresponding event 'filenameLengthExceed' is triggered.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="maximumFileSize" type="xsd:int">
+<xsd:attribute name="maximumFileSize" type="xsd:float">
 <xsd:annotation>
-<xsd:documentation>Specifies a file size limit in bytes that prevents the upload if at least one file exceeds the limit.
+<xsd:documentation>Specifies a file size limit in megabytes that prevents the upload if at least one file exceeds the limit.
 This property is not supported by Internet Explorer 8 and 9.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
@@ -6350,8 +7013,7 @@ This property is not supported by Internet Explorer 8 and 9. Example: mimeType [
 <xsd:attribute name="multiple" type="xsd:boolean">
 <xsd:annotation>
 <xsd:documentation>Allows multiple files to be chosen and uploaded from the same folder.
-This property is not supported by Internet Explorer 8 and 9 
-In Release 1.26 this property is not supported in all browsers so if set to 'true' it will be ignored</xsd:documentation>
+This property is not supported by Internet Explorer 8 and 9.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="noDataText" type="xsd:string">
@@ -6381,12 +7043,13 @@ In Release 1.26 this property is not supported in all browsers so if set to 'tru
 </xsd:attribute>
 <xsd:attribute name="change" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>The event is triggered when files are selected.</xsd:documentation>
+<xsd:documentation>The event is triggered when files are selected. Applications can set parameters and headerParameters which will be dispatched to the embedded FileUploader control.
+Limitation: parameters and headerParameters are not supported by Internet Explorer 9.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="fileDeleted" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>The event is triggered when a fileDeleted event occurs, typically by choosing the Delete pushbutton.</xsd:documentation>
+<xsd:documentation>The event is triggered when the Delete pushbutton is pressed.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="filenameLengthExceed" type="xsd:string">
@@ -6401,8 +7064,8 @@ In Release 1.26 this property is not supported in all browsers so if set to 'tru
 </xsd:attribute>
 <xsd:attribute name="fileSizeExceed" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>The event is triggered when the file size of an uploaded file is  exceeded (only if the maxFileSize property was provided by the application).
-This event is not supported by Internet Explorer 8 and 9.</xsd:documentation>
+<xsd:documentation>The event is triggered when the file size of an uploaded file is exceeded (only if the maxFileSize property was provided by the application).
+This event is not supported by Internet Explorer 9.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="typeMissmatch" type="xsd:string">
@@ -6459,7 +7122,7 @@ This event is not supported by Internet Explorer 8 and 9.</xsd:documentation>
 </xsd:attribute>
 <xsd:attribute name="uploadedDate" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>Specifies the date on which the file was uploaded.
+<xsd:documentation>Specifies the date on which the file was uploaded. 
 The application has to define the date format.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
@@ -6505,12 +7168,12 @@ If the value is false, the Delete pushbutton is not visible.</xsd:documentation>
 <xsd:extension base="n0:_ElementType">
 <xsd:attribute name="name" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>The name of the parameter.</xsd:documentation>
+<xsd:documentation>Specifies the name of the parameter.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="value" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>The value of the parameter.</xsd:documentation>
+<xsd:documentation>Specifies the value of the parameter.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -7247,22 +7910,22 @@ If the value is false, the Delete pushbutton is not visible.</xsd:documentation>
 <xsd:restriction base="xsd:string">
 <xsd:enumeration value="sort">
 <xsd:annotation>
-<xsd:documentation>Color: blue (#b8d0e8)</xsd:documentation>
+<xsd:documentation>Panel type for sorting</xsd:documentation>
 </xsd:annotation>
 </xsd:enumeration>
 <xsd:enumeration value="filter">
 <xsd:annotation>
-<xsd:documentation>Color: blue (#b8d0e8)</xsd:documentation>
+<xsd:documentation>Panel type for filtering</xsd:documentation>
 </xsd:annotation>
 </xsd:enumeration>
 <xsd:enumeration value="group">
 <xsd:annotation>
-<xsd:documentation>Color: blue (#b8d0e8)</xsd:documentation>
+<xsd:documentation>Panel type for grouping</xsd:documentation>
 </xsd:annotation>
 </xsd:enumeration>
 <xsd:enumeration value="columns">
 <xsd:annotation>
-<xsd:documentation>Color: blue (#b8d0e8)</xsd:documentation>
+<xsd:documentation>Panel type for columns setting</xsd:documentation>
 </xsd:annotation>
 </xsd:enumeration>
 </xsd:restriction>
@@ -7334,12 +7997,17 @@ If the value is false, the Delete pushbutton is not visible.</xsd:documentation>
 <xsd:restriction base="xsd:string">
 <xsd:enumeration value="Block">
 <xsd:annotation>
-<xsd:documentation>Inside the table popin, header is displayed in first line and value field is displayed in next line.</xsd:documentation>
+<xsd:documentation>Inside the table popin, header is displayed at the first line and cell content is displayed at the next line.</xsd:documentation>
 </xsd:annotation>
 </xsd:enumeration>
 <xsd:enumeration value="Inline">
 <xsd:annotation>
-<xsd:documentation>Inside the table popin, value field is displayed next to the header in the same line. Note: If there is no enough space for the value field then goes to next line.</xsd:documentation>
+<xsd:documentation>Inside the table popin, cell content is displayed next to the header in the same line. Note: If there is not enough space for the cell content then it jumps to the next line.</xsd:documentation>
+</xsd:annotation>
+</xsd:enumeration>
+<xsd:enumeration value="WithoutHeader">
+<xsd:annotation>
+<xsd:documentation>Inside the table popin, only the cell content will be visible.</xsd:documentation>
 </xsd:annotation>
 </xsd:enumeration>
 </xsd:restriction>
@@ -7522,6 +8190,25 @@ If the value is false, the Delete pushbutton is not visible.</xsd:documentation>
 <xsd:enumeration value="Solid">
 <xsd:annotation>
 <xsd:documentation>The toolbar has a solid background. Its content will be rendered in a standard way.</xsd:documentation>
+</xsd:annotation>
+</xsd:enumeration>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="_VerticalPlacementTypeType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="Top">
+<xsd:annotation>
+<xsd:documentation>Popover will be placed at the top of the reference control.</xsd:documentation>
+</xsd:annotation>
+</xsd:enumeration>
+<xsd:enumeration value="Bottom">
+<xsd:annotation>
+<xsd:documentation>Popover will be placed at the bottom of the reference control.</xsd:documentation>
+</xsd:annotation>
+</xsd:enumeration>
+<xsd:enumeration value="Vertical">
+<xsd:annotation>
+<xsd:documentation>Popover will be placed at the top or bottom of the reference control.</xsd:documentation>
 </xsd:annotation>
 </xsd:enumeration>
 </xsd:restriction>

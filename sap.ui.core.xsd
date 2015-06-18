@@ -45,6 +45,14 @@ For further hints about usage restrictions for this control, see also the docume
 A set of built in Icons is available and they can be fetched by calling sap.ui.core.IconPool.getIconURI and set this value to the src property on the Icon.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
+<xsd:element name="InvisibleText" type="n0:_InvisibleTextType" substitutionGroup="n0:Control">
+<xsd:annotation>
+<xsd:documentation>An InvisibleText is used to bring hidden texts to the UI for screen reader support. The hidden text can e.g. be referenced
+in the ariaLabelledBy or ariaDescribedBy associations of other controls.
+
+The inherited properties busy, busyIndicatorDelay and visible and the aggregation tooltip is not supported by this control.</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
 <xsd:element name="Item" type="n0:_ItemType" substitutionGroup="n0:Element">
 <xsd:annotation>
 <xsd:documentation>A control base type.</xsd:documentation>
@@ -103,7 +111,12 @@ sap.ui.base.EventProvider, and sap.ui.base.Object.</xsd:documentation>
 </xsd:element>
 <xsd:element name="UIComponent" type="n0:_UIComponentType" substitutionGroup="n0:Control">
 <xsd:annotation>
-<xsd:documentation>Base Class for UI Component.</xsd:documentation>
+<xsd:documentation>Creates and initializes a new UI component with the given &lt;code&gt;sId&lt;/code&gt; and
+settings.
+
+The set of allowed entries in the &lt;code&gt;mSettings&lt;/code&gt; object depends on
+the concrete subclass and is described there. See {@link sap.ui.core.Component}
+for a general description of this argument.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
 <xsd:element name="VariantLayoutData" type="n0:_VariantLayoutDataType" substitutionGroup="n0:LayoutData">
@@ -186,6 +199,12 @@ and provides lifecycle events.</xsd:documentation>
 <xsd:attribute name="url" type="n0:_URIType">
 <xsd:annotation>
 <xsd:documentation>The URL of the component. The property can only be applied initially.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="handleValidation" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>Enable/disable validation handling by MessageManager for this component.
+The resulting Messages will be propagated to the controls.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="settings" type="xsd:string">
@@ -319,6 +338,11 @@ See VariantLayoutData for aggregating multiple alternative LayoutData instances 
 </xsd:complexType>
 </xsd:element>
 </xsd:sequence>
+<xsd:attribute name="id" type="n0:_IDType">
+<xsd:annotation>
+<xsd:documentation>The unique identifier within a page, either configured or automatically generated.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
 </xsd:complexType>
 <!--type definition for UIElement 'sap.ui.core.HTML'-->
 <xsd:complexType name="_HTMLType">
@@ -402,17 +426,17 @@ then this event will fire, but there won't be a DOM node for this control.</xsd:
 <xsd:documentation>Since Icon uses font, this property will be applied to the css font-size property on the rendered DOM element.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="color" type="n0:_CSSColorType">
+<xsd:attribute name="color" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>The color of the Icon. If color is not defined here, the Icon inherits the color from its DOM parent.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="hoverColor" type="n0:_CSSColorType">
+<xsd:attribute name="hoverColor" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>This color is shown when icon is hovered. This property has no visual effect when run on mobile device.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="activeColor" type="n0:_CSSColorType">
+<xsd:attribute name="activeColor" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>This color is shown when icon is pressed/activated by the user.</xsd:documentation>
 </xsd:annotation>
@@ -427,17 +451,17 @@ then this event will fire, but there won't be a DOM node for this control.</xsd:
 <xsd:documentation>This is the height of the DOM element which contains the Icon. Setting this property doesn't affect the size of the font. If you want to make the font bigger, increase the size property.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="backgroundColor" type="n0:_CSSColorType">
+<xsd:attribute name="backgroundColor" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Background color of the Icon in normal state.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="hoverBackgroundColor" type="n0:_CSSColorType">
+<xsd:attribute name="hoverBackgroundColor" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Background color for Icon in hover state. This property has no visual effect when run on mobile device.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
-<xsd:attribute name="activeBackgroundColor" type="n0:_CSSColorType">
+<xsd:attribute name="activeBackgroundColor" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>Background color for Icon in active state.</xsd:documentation>
 </xsd:annotation>
@@ -450,6 +474,18 @@ then this event will fire, but there won't be a DOM node for this control.</xsd:
 <xsd:attribute name="press" type="xsd:string">
 <xsd:annotation>
 <xsd:documentation>This event is fired when icon is pressed/activated by the user.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+</xsd:extension>
+</xsd:complexContent>
+</xsd:complexType>
+<!--type definition for UIElement 'sap.ui.core.InvisibleText'-->
+<xsd:complexType name="_InvisibleTextType">
+<xsd:complexContent>
+<xsd:extension base="n0:_ControlType">
+<xsd:attribute name="text" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>The text of the InvisibleText.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -1289,6 +1325,20 @@ Supplement to the normal tooltip processing of the user agent.</xsd:documentatio
 <xsd:simpleType name="_CSSSizeShortHandType">
 <xsd:restriction base="xsd:string">
 <xsd:pattern value="inherit|(auto|[-+]?(0*|(\d+|\d*\.\d+)([eE][mM]|[eE][xX]|[pP][xX]|[cC][mM]|[mM][mM]|[iI][nN]|[pP][tT]|[pP][cC]|%))){1}(\s(auto|[-+]?(0*|(\d+|\d*\.\d+)([eE][mM]|[eE][xX]|[pP][xX]|[cC][mM]|[mM][mM]|[iI][nN]|[pP][tT]|[pP][cC]|%)))){0,3}"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="_CalendarTypeType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="Gregorian">
+<xsd:annotation>
+<xsd:documentation>The Gregorian calendar</xsd:documentation>
+</xsd:annotation>
+</xsd:enumeration>
+<xsd:enumeration value="Islamic">
+<xsd:annotation>
+<xsd:documentation>The Islamic calendar</xsd:documentation>
+</xsd:annotation>
+</xsd:enumeration>
 </xsd:restriction>
 </xsd:simpleType>
 <xsd:simpleType name="_CollisionType">
