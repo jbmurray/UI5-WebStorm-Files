@@ -146,9 +146,9 @@ for a general description of this argument.</xsd:documentation>
 </xsd:element>
 <xsd:element name="View" type="n0:_ViewType" substitutionGroup="n0:Control">
 <xsd:annotation>
-<xsd:documentation>A base class for Views. 
+<xsd:documentation>A base class for Views.
 
-Introduces the relationship to a Controller, some basic visual appearance settings like width and height 
+Introduces the relationship to a Controller, some basic visual appearance settings like width and height
 and provides lifecycle events.</xsd:documentation>
 </xsd:annotation>
 </xsd:element>
@@ -293,7 +293,7 @@ ATTENTION: use carefully to not create huge attributes or a large number of them
 <xsd:element name="tooltip" minOccurs="0">
 <xsd:annotation>
 <xsd:documentation>The tooltip that should be shown for this Element.
- 
+
 Can either be an instance of a TooltipBase subclass or a simple string.</xsd:documentation>
 </xsd:annotation>
 <xsd:complexType>
@@ -315,7 +315,7 @@ Can either be an instance of a TooltipBase subclass or a simple string.</xsd:doc
 <xsd:element name="layoutData" minOccurs="0">
 <xsd:annotation>
 <xsd:documentation>Defines the layout constraints for this control when it is used inside a Layout.
-LayoutData classes are typed classes and must match the embedding Layout. 
+LayoutData classes are typed classes and must match the embedding Layout.
 See VariantLayoutData for aggregating multiple alternative LayoutData instances to a single Element.</xsd:documentation>
 </xsd:annotation>
 <xsd:complexType>
@@ -468,12 +468,33 @@ then this event will fire, but there won't be a DOM node for this control.</xsd:
 </xsd:attribute>
 <xsd:attribute name="decorative" type="xsd:boolean">
 <xsd:annotation>
-<xsd:documentation>A decorative icon is included for design reasons. Accessibility tools will ignore decorative icons. Decorative icons don't have tab stop.</xsd:documentation>
+<xsd:documentation>A decorative icon is included for design reasons. Accessibility tools will ignore decorative icons. Tab stop isn't affected by this property anymore and it's now controlled by the existence of press event handler and the noTabStop property.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="useIconTooltip" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>Decides whether a default Icon tooltip should be used if no tooltip is set.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="alt" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>This defines the alternative text which is used for outputting the aria-label attribute on the DOM.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="noTabStop" type="xsd:boolean">
+<xsd:annotation>
+<xsd:documentation>Defines whether the tab stop of icon is controlled by the existence of press event handler. When it's set to false, Icon control has tab stop when press event handler is attached.
+If it's set to true, Icon control never has tab stop no matter whether press event handler exists or not.</xsd:documentation>
+</xsd:annotation>
+</xsd:attribute>
+<xsd:attribute name="ariaLabelledBy" type="xsd:string">
+<xsd:annotation>
+<xsd:documentation>Association to controls / ids which label this control (see WAI-ARIA attribute aria-labelledby).</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 <xsd:attribute name="press" type="xsd:string">
 <xsd:annotation>
-<xsd:documentation>This event is fired when icon is pressed/activated by the user.</xsd:documentation>
+<xsd:documentation>This event is fired when icon is pressed/activated by the user. When a handler is attached to this event, the Icon gets tab stop. If you want to disable this behavior, set the noTabStop property to true.</xsd:documentation>
 </xsd:annotation>
 </xsd:attribute>
 </xsd:extension>
@@ -1319,7 +1340,7 @@ Supplement to the normal tooltip processing of the user agent.</xsd:documentatio
 </xsd:simpleType>
 <xsd:simpleType name="_CSSSizeType">
 <xsd:restriction base="xsd:string">
-<xsd:pattern value="auto|inherit|[-+]?(0*|([0-9]+|[0-9]*\.[0-9]+)([rR][eE][mM]|[eE][mM]|[eE][xX]|[pP][xX]|[cC][mM]|[mM][mM]|[iI][nN]|[pP][tT]|[pP][cC]|%))"/>
+<xsd:pattern value="auto|inherit|[-+]?(0*|([0-9]+|[0-9]*\.[0-9]+)([rR][eE][mM]|[eE][mM]|[eE][xX]|[pP][xX]|[cC][mM]|[mM][mM]|[iI][nN]|[pP][tT]|[pP][cC]|%))|calc\(\s*(\(\s*)*[-+]?(([0-9]+|[0-9]*\.[0-9]+)([rR][eE][mM]|[eE][mM]|[eE][xX]|[pP][xX]|[cC][mM]|[mM][mM]|[iI][nN]|[pP][tT]|[pP][cC]|%)?)(\s*(\)\s*)*(\s[-+]\s|[*\/])\s*(\(\s*)*([-+]?(([0-9]+|[0-9]*\.[0-9]+)([rR][eE][mM]|[eE][mM]|[eE][xX]|[pP][xX]|[cC][mM]|[mM][mM]|[iI][nN]|[pP][tT]|[pP][cC]|%)?)))*\s*(\)\s*)*\)"/>
 </xsd:restriction>
 </xsd:simpleType>
 <xsd:simpleType name="_CSSSizeShortHandType">
